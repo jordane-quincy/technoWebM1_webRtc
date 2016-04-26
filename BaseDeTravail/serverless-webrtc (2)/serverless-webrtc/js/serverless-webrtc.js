@@ -81,7 +81,7 @@ function saveInfoUser() {
         //On cache le formulaire
         $("#modalLogin").hide();
         //On affiche la modal de création ou de join de room
-        $('#createOrJoin').modal('show');
+        $('#createOrJoin').show();
     }
 }
 
