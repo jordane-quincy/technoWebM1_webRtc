@@ -79,9 +79,9 @@ function saveInfoUser() {
     else {
         console.log(username);
         //On cache le formulaire
-        $("#modalLogin").hide();
+        $("#modalLogin").modal("hide");
         //On affiche la modal de création ou de join de room
-        $('#createOrJoin').show();
+        $('#createOrJoin').modal('show');
     }
 }
 
