@@ -22,6 +22,7 @@ var pc1icedone = false;
 $('#showLocalOffer').modal('hide');
 $('#getRemoteAnswer').modal('hide');
 $('#waitForConnection').modal('hide');
+$('#modalLogin').modal('show');
 $('#createOrJoin').hide();
 
 //$('#createOrJoin').modal('show');
@@ -65,6 +66,24 @@ $('#fileBtn').change(function() {
 
     sendFile(file);
 });
+
+/**
+ * Function pour save les info des utilisateurs
+ * @return {[type]} [description]
+ */
+function saveInfoUser() {
+    var username = $("#username").val();
+    if (!username) {
+        alert("Vous n'avez pas saisi de username");
+    }
+    else {
+        console.log(username);
+        //On cache le formulaire
+        $("#modalLogin").hide();
+        //On affiche la modal de création ou de join de room
+        $('#createOrJoin').modal('show');
+    }
+}
 
 function fileSent(file) {
     console.log(file + " sent");
