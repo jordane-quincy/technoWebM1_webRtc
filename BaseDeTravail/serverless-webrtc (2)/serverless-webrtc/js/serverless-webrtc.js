@@ -74,21 +74,21 @@ $('#avatar').change(function() {
   var img = this.files[0];
   // si c'est bien une image
   if (img.type.match('image.*')){
-      //si poids image > à 2 Mo
-      if( (img.size / 1024 / 1024) > 2 ){
-        alert("L'avatar fait plus de 2 Mo. Merci d'en choisir un autre.");
-      }else{
-        // creation et configuration du lecteur de fichier
-        var reader = new FileReader();
-        reader.onload = function(){
-          var avatarEnBase64 = reader.result; // via readAsDataURL, on aura directement : "data:image/png;base64,"+ l'image en base64
-          console.log("avatarEnBase64 :"+ avatarEnBase64);
-          //mise a jour de la preview
-          //FIXME: mettre des dimensions sur le thumb ?
-          $('#avatarImgLoaded').attr("src", avatarEnBase64);
-        }
-        reader.readAsDataURL(img);
+    //si poids image > à 2 Mo
+    if( (img.size / 1024 / 1024) > 2 ){
+      alert("L'avatar fait plus de 2 Mo. Merci d'en choisir un autre.");
+    }else{
+      // creation et configuration du lecteur de fichier
+      var reader = new FileReader();
+      reader.onload = function(){
+        var avatarEnBase64 = reader.result; // via readAsDataURL, on aura directement : "data:image/png;base64,"+ l'image en base64
+        //mise a jour de la preview
+        //FIXME: mettre des dimensions sur le thumb ?
+        $('#avatarImgLoaded').attr("src", avatarEnBase64);
       }
+      reader.readAsDataURL(img);
+    }
+  }
 });
 
 /**
@@ -97,15 +97,16 @@ $('#avatar').change(function() {
  */
 function saveInfoUser() {
     var username = $("#username").val();
-
     stockage.setItem("username", username);
+    var avatarImgLoadedSrc = $("#avatarImgLoaded").attr("src");
+    stockage.setItem("avatarImgSrc", avatarImgLoadedSrc);
 
     if (!username) {
+        //Affichae d'un message d'erreur et ajout d'un placeholder sur l'input (en rouge)
+        document.getElementById("errorInputUserInfo").innerHTML = "Vous n'avez pas rempli votre username";
         $("#username").attr('placeholder', 'Entrez votre username');
-        alert("Vous n'avez pas saisi de username");
     }
     else {
-        console.log(stockage.getItem("username"));
         //On cache le formulaire
         $("#modalLogin").modal("hide");
         //On affiche la modal de création ou de join de room
@@ -133,9 +134,14 @@ function sendFile(data) {
 
 function sendMessage() {
     if ($('#messageTextBox').val()) {
+        var username = sessionStorage.getItem('username');
         var channel = new RTCMultiSession();
         writeToChatLog($('#messageTextBox').val(), "text-success");
-        channel.send({message: $('#messageTextBox').val()});
+        channel.send({
+          message: $('#messageTextBox').val(),
+          username: stockage.getItem("username"),
+          avatar: stockage.getItem("avatarImgSrc")
+        });
         $('#messageTextBox').val("");
 
         // Scroll chat text area to the bottom on new input.
@@ -174,7 +180,7 @@ function setupDC1() {
                     fileReceiver1.receive(e.data, {});
                 }
                 else {
-                    writeToChatLog(data.message, "text-info");
+                    writeToChatLog(data.message, "text-info", data.username, data.avatar);
                     // Scroll chat text area to the bottom on new input.
                     $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
                 }
@@ -268,7 +274,7 @@ pc2.ondatachannel = function (e) {
                 fileReceiver2.receive(e.data, {});
             }
             else {
-                writeToChatLog(data.message, "text-info");
+                writeToChatLog(data.message, "text-info", data.username, data.avatar);
                 // Scroll chat text area to the bottom on new input.
                 $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
             }
@@ -321,6 +327,14 @@ function getTimestamp() {
     return result;
 }
 
-function writeToChatLog(message, message_type) {
-    document.getElementById('chatlog').innerHTML += '<p class=\"' + message_type + '\">' + "[" + getTimestamp() + "] " + message + '</p>';
+function writeToChatLog(message, message_type, username, avatar) {
+    var fromUsername = "";
+    if(username != null){
+      fromUsername = "|"+ username +"| ";
+
+      if($('#avatarGallery').is(':empty') && avatar != null) {
+        $('#avatarGallery').append('<p>'+ username +' <img alt=\"'+ username +'\" src=\"' + avatar +'\" >'+ '</p>');
+      }
+    }
+    document.getElementById('chatlog').innerHTML += '<p class=\"' + message_type + '\">' + "[" + getTimestamp() + "] " + fromUsername + message + '</p>';
 }
