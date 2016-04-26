@@ -22,7 +22,9 @@ var pc1icedone = false;
 $('#showLocalOffer').modal('hide');
 $('#getRemoteAnswer').modal('hide');
 $('#waitForConnection').modal('hide');
-$('#createOrJoin').modal('show');
+$('#createOrJoin').hide();
+
+//$('#createOrJoin').modal('show');
 
 $('#createBtn').click(function() {
     $('#showLocalOffer').modal('show');

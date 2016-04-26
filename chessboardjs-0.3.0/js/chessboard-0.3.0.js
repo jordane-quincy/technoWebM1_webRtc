@@ -1192,6 +1192,9 @@ function beginDraggingPiece(source, piece, x, y) {
   }
 }
 
+
+
+//Check si le mouvement du pion est possible ou non
 function validMovementPawn(source, destination) {
 
 }
