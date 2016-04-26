@@ -80,8 +80,9 @@ function saveInfoUser() {
     stockage.setItem("username", username);
 
     if (!username) {
+        //Affichae d'un message d'erreur et ajout d'un placeholder sur l'input (en rouge)
+        document.getElementById("errorInputUserInfo").innerHTML = "Vous n'avez pas rempli votre username";
         $("#username").attr('placeholder', 'Entrez votre username');
-        alert("Vous n'avez pas saisi de username");        
     }
     else {
         console.log(stockage.getItem("username"));
