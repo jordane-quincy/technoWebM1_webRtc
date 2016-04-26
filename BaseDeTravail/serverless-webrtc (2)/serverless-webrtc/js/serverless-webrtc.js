@@ -113,6 +113,8 @@ function sendFile(data) {
 
 function sendMessage() {
     if ($('#messageTextBox').val()) {
+        var username = sessionStorage.getItem('username');
+        console.log(username);
         var channel = new RTCMultiSession();
         writeToChatLog($('#messageTextBox').val(), "text-success");
         channel.send({message: $('#messageTextBox').val()});
