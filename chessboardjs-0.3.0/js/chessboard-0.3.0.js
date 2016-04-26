@@ -1183,11 +1183,38 @@ function beginDraggingPiece(source, piece, x, y) {
       top: y - (SQUARE_SIZE / 2)
     });
 
+
+
   if (source !== 'spare') {
     // highlight the source square and hide the piece
     $('#' + SQUARE_ELS_IDS[source]).addClass(CSS.highlight1)
       .find('.' + CSS.piece).css('display', 'none');
   }
+}
+
+function validMovementPawn(sourcePiece, x, y) {
+
+}
+
+function isValidSquare(x, y) {
+debugger;
+    //On récupère le type de la pièce DRAGGED_PIECE est de la forme d'un string avec 2 caractères,
+    // Le premier est la couleur de la pièce, le second est le type de la pièc
+    var colorPiece = DRAGGED_PIECE[0];
+    var typePiece = DRAGGED_PIECE[1];
+    var sourcePiece = DRAGGED_PIECE_SOURCE;
+    var valid = false;
+    var _x = Math.round(x / calculateSquareSize());
+    var _y = Math.round(y / calculateSquareSize());
+    switch (typePiece.toLowerCase()) {
+        //Déplacement du pion
+        case "p" :
+            valid = validMovementPawn(sourcePiece, _x, _y);
+            break;
+        case "k" :
+            valid = validMovementKing(sourcePiece, _x, _y);
+    }
+    return false;
 }
 
 function updateDraggedPiece(x, y) {
@@ -1197,12 +1224,18 @@ function updateDraggedPiece(x, y) {
     top: y - (SQUARE_SIZE / 2)
   });
 
+  if (isValidSquare(x, y)) {
+      console.log("good");
+  }
+  else {
+      console.log("pas good");
+  }
+
   // get location
   var location = isXYOnSquare(x, y);
 
   // do nothing if the location has not changed
   if (location === DRAGGED_PIECE_LOCATION) return;
-
   // remove highlight from previous square
   if (validSquare(DRAGGED_PIECE_LOCATION) === true) {
     $('#' + SQUARE_ELS_IDS[DRAGGED_PIECE_LOCATION])
