@@ -1192,27 +1192,25 @@ function beginDraggingPiece(source, piece, x, y) {
   }
 }
 
-function validMovementPawn(sourcePiece, x, y) {
+function validMovementPawn(source, destination) {
 
 }
 
 function isValidSquare(x, y) {
-debugger;
+    debugger;
     //On récupère le type de la pièce DRAGGED_PIECE est de la forme d'un string avec 2 caractères,
     // Le premier est la couleur de la pièce, le second est le type de la pièc
     var colorPiece = DRAGGED_PIECE[0];
     var typePiece = DRAGGED_PIECE[1];
     var sourcePiece = DRAGGED_PIECE_SOURCE;
     var valid = false;
-    var _x = Math.round(x / calculateSquareSize());
-    var _y = Math.round(y / calculateSquareSize());
     switch (typePiece.toLowerCase()) {
         //Déplacement du pion
         case "p" :
-            valid = validMovementPawn(sourcePiece, _x, _y);
+            valid = validMovementPawn(sourcePiece, isXYOnSquare(x, y));
             break;
         case "k" :
-            valid = validMovementKing(sourcePiece, _x, _y);
+            valid = validMovementKing(sourcePiece, isXYOnSquare(x, y));
     }
     return false;
 }
