@@ -5,6 +5,9 @@
     https://webrtc-demos.appspot.com/html/pc1.html
 */
 
+//FIXME: utiliser le localstorage à la fin du dév
+var stockage = sessionStorage;
+
 var cfg = {"iceServers":[{"url":"stun:23.21.150.121"}]},
     con = { 'optional': [{'DtlsSrtpKeyAgreement': true}] };
 
@@ -73,11 +76,14 @@ $('#fileBtn').change(function() {
  */
 function saveInfoUser() {
     var username = $("#username").val();
+
+    stockage.setItem("username", username);
+
     if (!username) {
         alert("Vous n'avez pas saisi de username");
     }
     else {
-        console.log(username);
+        console.log(stockage.getItem("username"));
         //On cache le formulaire
         $("#modalLogin").modal("hide");
         //On affiche la modal de création ou de join de room
