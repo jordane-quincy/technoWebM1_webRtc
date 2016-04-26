@@ -70,6 +70,27 @@ $('#fileBtn').change(function() {
     sendFile(file);
 });
 
+$('#avatar').change(function() {
+  var img = this.files[0];
+  // si c'est bien une image
+  if (img.type.match('image.*')){
+      //si poids image > à 2 Mo
+      if( (img.size / 1024 / 1024) > 2 ){
+        alert("L'avatar fait plus de 2 Mo. Merci d'en choisir un autre.");
+      }else{
+        // creation et configuration du lecteur de fichier
+        var reader = new FileReader();
+        reader.onload = function(){
+          var avatarEnBase64 = reader.result; // via readAsDataURL, on aura directement : "data:image/png;base64,"+ l'image en base64
+          console.log("avatarEnBase64 :"+ avatarEnBase64);
+          //mise a jour de la preview
+          //FIXME: mettre des dimensions sur le thumb ?
+          $('#avatarImgLoaded').attr("src", avatarEnBase64);
+        }
+        reader.readAsDataURL(img);
+      }
+});
+
 /**
  * Function pour save les info des utilisateurs
  * @return {[type]} [description]
@@ -81,7 +102,7 @@ function saveInfoUser() {
 
     if (!username) {
         $("#username").attr('placeholder', 'Entrez votre username');
-        alert("Vous n'avez pas saisi de username");        
+        alert("Vous n'avez pas saisi de username");
     }
     else {
         console.log(stockage.getItem("username"));

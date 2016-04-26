@@ -97,7 +97,8 @@
 
 <div  class="modal" id="modalLogin" >
     <label for="username">Username : </label><input type="text" name="username" class="inputInfoUsername" id="username" tabindex="1"/>
-    <input type="submit" name="submit" tabindex="2" value="Save" onClick="return saveInfoUser();"/>
+    <label for="avatar">Avatar : </label><input type="file" name="avatar" id="avatar" tabindex="2" accept='image/*'><img id="avatarImgLoaded">
+    <input type="submit" name="submit" tabindex="3" value="Save" onClick="return saveInfoUser();"/>
 </div>
 
 <div class="modal" id="createOrJoin" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
