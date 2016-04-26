@@ -1,1 +1,5 @@
 textarea { resize:none; }
+
+.inputInfoUsername::-webkit-input-placeholder {
+    color: red;
+}

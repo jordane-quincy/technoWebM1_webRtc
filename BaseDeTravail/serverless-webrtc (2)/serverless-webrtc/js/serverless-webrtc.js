@@ -80,7 +80,8 @@ function saveInfoUser() {
     stockage.setItem("username", username);
 
     if (!username) {
-        alert("Vous n'avez pas saisi de username");
+        $("#username").attr('placeholder', 'Entrez votre username');
+        alert("Vous n'avez pas saisi de username");        
     }
     else {
         console.log(stockage.getItem("username"));
