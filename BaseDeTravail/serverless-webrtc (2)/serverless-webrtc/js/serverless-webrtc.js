@@ -102,10 +102,10 @@ $('#avatar').change(function() {
 });
 
 $('#biggerText').click(function() {
-  $('.well').css('font-size', parseInt($('.well').css('font-size')) * (1 + 15/100)); //taile actuelle + 15%
+  $('.well, #messageTextBox').css('font-size', parseInt($('.well').css('font-size')) * (1 + 15/100)); //taile actuelle + 15%
 });
 $('#smallerText').click(function() {
-  $('.well').css('font-size', parseInt($('.well').css('font-size')) * (1 - 15/100)); //taile actuelle - 15%
+  $('.well, #messageTextBox').css('font-size', parseInt($('.well').css('font-size')) * (1 - 15/100)); //taile actuelle - 15%
 });
 
 
