@@ -28,8 +28,6 @@ $('#waitForConnection').modal('hide');
 $('#modalLogin').modal('show');
 $('#createOrJoin').hide();
 
-//$('#createOrJoin').modal('show');
-
 $('#createBtn').click(function() {
     $('#showLocalOffer').modal('show');
     createLocalOffer();
