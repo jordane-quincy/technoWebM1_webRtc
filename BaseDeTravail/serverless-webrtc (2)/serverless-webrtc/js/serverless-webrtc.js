@@ -39,6 +39,10 @@ $('#joinBtn').click(function() {
     $('#getRemoteOffer').modal('show');
 });
 
+$('#offerGoBackBtn').click(function() {
+    $('#showLocalOffer').modal('hide');
+    $('#createOrJoin').modal('show');
+});
 $('#offerSentBtn').click(function() {
     $('#getRemoteAnswer').modal('show');
 });
@@ -52,10 +56,18 @@ $('#offerRecdBtn').click(function() {
     $('#showLocalAnswer').modal('show');
 });
 
+$('#answerGoBackBtn').click(function() {
+    $('#showLocalAnswer').modal('hide');
+    $('#createOrJoin').modal('show');
+});
 $('#answerSentBtn').click(function() {
     $('#waitForConnection').modal('show');
 });
 
+$('#offerRecd GoBackBtn').click(function() {
+    $('#getRemoteOffer').modal('hide');
+    $('#createOrJoin').modal('show');
+});
 $('#answerRecdBtn').click(function() {
     var answer = $('#remoteAnswer').val();
     var answerDesc = new RTCSessionDescription(JSON.parse(answer));
@@ -332,7 +344,7 @@ function writeToChatLog(message, message_type, username, avatar) {
     if(username != null){
       fromUsername = "|"+ username +"| ";
 
-      if($('#avatarGallery').is(':empty') && avatar != null) {
+      if($('#avatarGallery').is(':empty') && avatar != null && avatar != "undefined") {
         $('#avatarGallery').append('<p>'+ username +' <img alt=\"'+ username +'\" src=\"' + avatar +'\" >'+ '</p>');
       }
     }

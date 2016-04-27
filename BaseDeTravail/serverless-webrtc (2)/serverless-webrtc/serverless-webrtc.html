@@ -38,6 +38,7 @@
   <textarea class="input-large" id="localOffer" name="localOffer" rows="10" cols="100"></textarea>
   </div>
   <div class="modal-footer">
+    <button class="btn btn-primary" id="offerGoBackBtn" data-dismiss="modal" aria-hidden="true">Back to mode selection.</button>
     <button class="btn btn-primary" id="offerSentBtn" data-dismiss="modal" aria-hidden="true">Okay, I sent it.</button>
   </div>
 </div>
@@ -52,6 +53,7 @@
   <textarea class="input-large" id="localAnswer" name="localAnswer" rows="10" cols="100"></textarea>
   </div>
   <div class="modal-footer">
+    <button class="btn btn-primary" id="answerGoBackBtn" data-dismiss="modal" aria-hidden="true">Back to mode selection.</button>
     <button class="btn btn-primary" id="answerSentBtn" data-dismiss="modal" aria-hidden="true">Okay, I sent it.</button>
   </div>
 </div>
@@ -65,7 +67,8 @@
   <br/>
   <textarea class="input-large" id="remoteOffer" name="remoteOffer" rows="10" cols="100" autocomplete="off"></textarea>
   </div>
-  <div class="modal-footer"><!-- FIXME: permettre un retour arrière a chaque étape (login, échange offer/answer, etc.)-->
+  <div class="modal-footer">
+    <button class="btn btn-primary" id="offerRecdGoBackBtn" data-dismiss="modal" aria-hidden="true">Back to mode selection.</button>
     <button class="btn btn-primary" id="offerRecdBtn" data-dismiss="modal" aria-hidden="true">Okay, I pasted it.</button>
   </div>
 </div>
