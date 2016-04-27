@@ -345,14 +345,27 @@ function getTimestamp() {
     return result;
 }
 
+function replaceSmileyByImg(texteOriginal){
+  //img src : https://en.wikipedia.org/wiki/Wikipedia:Emoticons
+  var texteAvecImg = texteOriginal;
+  texteAvecImg = texteAvecImg.replace(/:\)/g, '<img src="./img/emoticons/27px-Face-smile.svg.png" title=":)" alt=":)" />');
+  texteAvecImg = texteAvecImg.replace(/:\(/g, '<img src="./img/emoticons/27px-Face-sad.svg.png" title=":(" alt=":(" />');
+  texteAvecImg = texteAvecImg.replace(/;\)/g, '<img src="./img/emoticons/27px-Face-wink.svg.png" title=";)" alt=";)" />');
+  texteAvecImg = texteAvecImg.replace(/:D/g, '<img src="./img/emoticons/27px-Face-grin.svg.png" title=":D" alt=":D" />');
+  return texteAvecImg;
+}
+
 function writeToChatLog(message, message_type, username, avatar) {
     var fromUsername = "";
     if(username != null){
       fromUsername = "|"+ username +"| ";
 
       if($('#avatarGallery').is(':empty') && avatar != null && avatar != "undefined") {
-        $('#avatarGallery').append('<p>'+ username +' <img alt=\"'+ username +'\" src=\"' + avatar +'\" >'+ '</p>');
+        $('#avatarGallery').append('<p>'+ username +' <img title=\"'+ username +'\" alt=\"avatar of '+ username +'\" src=\"' + avatar +'\" >'+ '</p>');
       }
     }
+
+    message = replaceSmileyByImg(message);
+
     document.getElementById('chatlog').innerHTML += '<p class=\"' + message_type + '\">' + "[" + getTimestamp() + "] " + fromUsername + message + '</p>';
 }
