@@ -23,6 +23,9 @@ textarea { resize:none; }
 #avatarGallery p {
   text-align: center;
 }
-#avatarGallery p img {
+#avatarGallery p img,
+#avatarImgLoaded {
   display: block;
+  width: 48px;
+  height: 48px;
 }
