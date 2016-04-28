@@ -18,20 +18,27 @@ if(usernameAlreadySaved != null){
     $('#saveInfoUserButton').focus();
   }
 }
-var colorMsgSent = stockage.getItem("colorMsgSent");
-if(colorMsgSent == null){
+
+if(stockage.getItem("colorMsgSent") == null){
   stockage.setItem("colorMsgSent", '#468847');
 }
-$('.textChatSent').css('color', colorMsgSent);
-$('#colorPickerMsgSent').val(colorMsgSent);
+updateTextChatSentColor();
 
-var colorMsgReceived = stockage.getItem("colorMsgReceived");
-if(colorMsgReceived == null){
+if(stockage.getItem("colorMsgReceived") == null){
   stockage.setItem("colorMsgReceived", '#3a87ad');
 }
-$('.textChatReceived').css('color', colorMsgReceived);
-$('#colorPickerMsgReceived').val(colorMsgReceived);
+updateTextChatReceivedColor();
 
+function updateTextChatSentColor(){
+  var colorMsgSent = stockage.getItem("colorMsgSent");
+  $('.textChatSent').css('color', colorMsgSent);
+  $('#colorPickerMsgSent').val(colorMsgSent);
+}
+function updateTextChatReceivedColor(){
+  var colorMsgReceived = stockage.getItem("colorMsgReceived");
+  $('.textChatReceived').css('color', colorMsgReceived);
+  $('#colorPickerMsgReceived').val(colorMsgReceived);
+}
 
 var cfg = {"iceServers":[{"url":"stun:23.21.150.121"}]},
     con = { 'optional': [{'DtlsSrtpKeyAgreement': true}] };
@@ -135,12 +142,12 @@ $('#smallerText').click(function() {
 $("#colorPickerMsgSent").change(function() {
   var colorPickedForMsgSent = $("#colorPickerMsgSent").val();
   stockage.setItem("colorMsgSent", colorPickedForMsgSent);
-  $('.textChatSent').css('color', colorPickedForMsgSent);
+  updateTextChatSentColor();
 });
 $("#colorPickerMsgReceived").change(function() {
   var colorPickedForMsgReceived = $("#colorPickerMsgReceived").val();
-    stockage.setItem("colorMsgReceived", colorPickedForMsgReceived);
-  $('.textChatReceived').css('color', colorPickedForMsgReceived);
+  stockage.setItem("colorMsgReceived", colorPickedForMsgReceived);
+  updateTextChatReceivedColor();
 });
 
 /**
@@ -189,6 +196,7 @@ function sendMessage() {
         var username = sessionStorage.getItem('username');
         var channel = new RTCMultiSession();
         writeToChatLog($('#messageTextBox').val(), "textChatSent");
+        updateTextChatSentColor();
         channel.send({
           message: $('#messageTextBox').val(),
           username: stockage.getItem("username"),
@@ -233,6 +241,7 @@ function setupDC1() {
                 }
                 else {
                     writeToChatLog(data.message, "textChatReceived", data.username, data.avatar);
+                    updateTextChatReceivedColor();
                     // Scroll chat text area to the bottom on new input.
                     $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
                 }
@@ -327,6 +336,7 @@ pc2.ondatachannel = function (e) {
             }
             else {
                 writeToChatLog(data.message, "textChatReceived", data.username, data.avatar);
+                updateTextChatReceivedColor();
                 // Scroll chat text area to the bottom on new input.
                 $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
             }
