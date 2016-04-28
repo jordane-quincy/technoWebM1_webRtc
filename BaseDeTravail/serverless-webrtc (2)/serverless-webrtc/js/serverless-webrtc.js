@@ -18,6 +18,20 @@ if(usernameAlreadySaved != null){
     $('#saveInfoUserButton').focus();
   }
 }
+var colorMsgSent = stockage.getItem("colorMsgSent");
+if(colorMsgSent == null){
+  stockage.setItem("colorMsgSent", '#468847');
+}
+$('.textChatSent').css('color', colorMsgSent);
+$('#colorPickerMsgSent').val(colorMsgSent);
+
+var colorMsgReceived = stockage.getItem("colorMsgReceived");
+if(colorMsgReceived == null){
+  stockage.setItem("colorMsgReceived", '#3a87ad');
+}
+$('.textChatReceived').css('color', colorMsgReceived);
+$('#colorPickerMsgReceived').val(colorMsgReceived);
+
 
 var cfg = {"iceServers":[{"url":"stun:23.21.150.121"}]},
     con = { 'optional': [{'DtlsSrtpKeyAgreement': true}] };
@@ -118,7 +132,16 @@ $('#biggerText').click(function() {
 $('#smallerText').click(function() {
   $('.well, #messageTextBox').css('font-size', parseInt($('.well').css('font-size')) * (1 - 15/100)); //taile actuelle - 15%
 });
-
+$("#colorPickerMsgSent").change(function() {
+  var colorPickedForMsgSent = $("#colorPickerMsgSent").val();
+  stockage.setItem("colorMsgSent", colorPickedForMsgSent);
+  $('.textChatSent').css('color', colorPickedForMsgSent);
+});
+$("#colorPickerMsgReceived").change(function() {
+  var colorPickedForMsgReceived = $("#colorPickerMsgReceived").val();
+    stockage.setItem("colorMsgReceived", colorPickedForMsgReceived);
+  $('.textChatReceived').css('color', colorPickedForMsgReceived);
+});
 
 /**
  * Function pour save les info des utilisateurs
@@ -165,7 +188,7 @@ function sendMessage() {
     if ($('#messageTextBox').val()) {
         var username = sessionStorage.getItem('username');
         var channel = new RTCMultiSession();
-        writeToChatLog($('#messageTextBox').val(), "text-success");
+        writeToChatLog($('#messageTextBox').val(), "textChatSent");
         channel.send({
           message: $('#messageTextBox').val(),
           username: stockage.getItem("username"),
@@ -209,7 +232,7 @@ function setupDC1() {
                     fileReceiver1.receive(e.data, {});
                 }
                 else {
-                    writeToChatLog(data.message, "text-info", data.username, data.avatar);
+                    writeToChatLog(data.message, "textChatReceived", data.username, data.avatar);
                     // Scroll chat text area to the bottom on new input.
                     $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
                 }
@@ -303,7 +326,7 @@ pc2.ondatachannel = function (e) {
                 fileReceiver2.receive(e.data, {});
             }
             else {
-                writeToChatLog(data.message, "text-info", data.username, data.avatar);
+                writeToChatLog(data.message, "textChatReceived", data.username, data.avatar);
                 // Scroll chat text area to the bottom on new input.
                 $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
             }
