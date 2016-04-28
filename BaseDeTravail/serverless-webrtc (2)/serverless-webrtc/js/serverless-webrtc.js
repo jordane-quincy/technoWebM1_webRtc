@@ -8,6 +8,17 @@
 //FIXME: utiliser le localstorage à la fin du dév
 var stockage = sessionStorage;
 
+//des le chargement de la page
+var usernameAlreadySaved = stockage.getItem("username");
+if(usernameAlreadySaved != null){
+  //on pré rempli l'input
+  $('#username').val(usernameAlreadySaved);
+  // et si le login est visible, on met le focus sur save
+  if($('#modalLogin').css('display') != "none"){
+    $('#saveInfoUserButton').focus();
+  }
+}
+
 var cfg = {"iceServers":[{"url":"stun:23.21.150.121"}]},
     con = { 'optional': [{'DtlsSrtpKeyAgreement': true}] };
 
