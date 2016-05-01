@@ -40,6 +40,16 @@ function updateTextChatReceivedColor(){
   $('#colorPickerMsgReceived').val(colorMsgReceived);
 }
 
+
+$("#smileyList").append(getSmileyDom(':)', './img/emoticons/27px-Face-smile.svg.png'));
+$("#smileyList").append(getSmileyDom(':(', './img/emoticons/27px-Face-sad.svg.png'));
+$("#smileyList").append(getSmileyDom(';)', './img/emoticons/27px-Face-wink.svg.png'));
+$("#smileyList").append(getSmileyDom(':D', './img/emoticons/27px-Face-grin.svg.png'));
+
+function getSmileyDom(text,  imgLink){
+  return '<img src="'+ imgLink +'" title="'+text+'" alt="'+text+'" />';
+}
+
 var cfg = {"iceServers":[{"url":"stun:23.21.150.121"}]},
     con = { 'optional': [{'DtlsSrtpKeyAgreement': true}] };
 
@@ -148,7 +158,6 @@ $("#colorPickerMsgReceived").change(function() {
   stockage.setItem("colorMsgReceived", colorPickedForMsgReceived);
   updateTextChatReceivedColor();
 });
-
 
 function sendAvatar() {
     if (stockage.getItem("avatarImgSrc")) {
@@ -414,10 +423,10 @@ function getTimestamp() {
 function replaceSmileyByImg(texteOriginal){
   //img src : https://en.wikipedia.org/wiki/Wikipedia:Emoticons
   var texteAvecImg = texteOriginal;
-  texteAvecImg = texteAvecImg.replace(/:\)/g, '<img src="./img/emoticons/27px-Face-smile.svg.png" title=":)" alt=":)" />');
-  texteAvecImg = texteAvecImg.replace(/:\(/g, '<img src="./img/emoticons/27px-Face-sad.svg.png" title=":(" alt=":(" />');
-  texteAvecImg = texteAvecImg.replace(/;\)/g, '<img src="./img/emoticons/27px-Face-wink.svg.png" title=";)" alt=";)" />');
-  texteAvecImg = texteAvecImg.replace(/:D/g, '<img src="./img/emoticons/27px-Face-grin.svg.png" title=":D" alt=":D" />');
+  texteAvecImg = texteAvecImg.replace(/:\)/g, getSmileyDom(':)', './img/emoticons/27px-Face-smile.svg.png'));
+  texteAvecImg = texteAvecImg.replace(/:\(/g, getSmileyDom(':(', './img/emoticons/27px-Face-sad.svg.png'));
+  texteAvecImg = texteAvecImg.replace(/;\)/g, getSmileyDom(';)', './img/emoticons/27px-Face-wink.svg.png'));
+  texteAvecImg = texteAvecImg.replace(/:D/g, getSmileyDom(':D', './img/emoticons/27px-Face-grin.svg.png'));
   return texteAvecImg;
 }
 
