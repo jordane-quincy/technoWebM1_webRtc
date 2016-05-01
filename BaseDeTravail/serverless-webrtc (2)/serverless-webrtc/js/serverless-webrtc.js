@@ -41,13 +41,17 @@ function updateTextChatReceivedColor(){
 }
 
 
-$("#smileyList").append(getSmileyDom(':)', './img/emoticons/27px-Face-smile.svg.png'));
-$("#smileyList").append(getSmileyDom(':(', './img/emoticons/27px-Face-sad.svg.png'));
-$("#smileyList").append(getSmileyDom(';)', './img/emoticons/27px-Face-wink.svg.png'));
-$("#smileyList").append(getSmileyDom(':D', './img/emoticons/27px-Face-grin.svg.png'));
+$("#smileyList").append(getSmileyDom(':)', './img/emoticons/27px-Face-smile.svg.png', true));
+$("#smileyList").append(getSmileyDom(':(', './img/emoticons/27px-Face-sad.svg.png', true));
+$("#smileyList").append(getSmileyDom(';)', './img/emoticons/27px-Face-wink.svg.png', true));
+$("#smileyList").append(getSmileyDom(':D', './img/emoticons/27px-Face-grin.svg.png', true));
 
-function getSmileyDom(text,  imgLink){
-  return '<img src="'+ imgLink +'" title="'+text+'" alt="'+text+'" />';
+function getSmileyDom(text,  imgLink, hasOnClickFunction){
+  var onClickFunction = '';
+  if(hasOnClickFunction) {
+    onClickFunction = 'onclick="$(\'#messageTextBox\').val($(\'#messageTextBox\').val() + \''+ text +'\');"';
+  }
+  return '<img src="'+ imgLink +'" title="'+text+'" alt="'+text+'" '+ onClickFunction +' />';
 }
 
 var cfg = {"iceServers":[{"url":"stun:23.21.150.121"}]},
