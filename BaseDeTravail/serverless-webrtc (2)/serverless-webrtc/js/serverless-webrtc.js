@@ -125,7 +125,6 @@ $('#avatar').change(function() {
       reader.onload = function(){
         var avatarEnBase64 = reader.result; // via readAsDataURL, on aura directement : "data:image/png;base64,"+ l'image en base64
         //mise a jour de la preview
-        //FIXME: mettre des dimensions sur le thumb ?
         $('#avatarImgLoaded').attr("src", avatarEnBase64);
       }
       reader.readAsDataURL(img);
@@ -149,6 +148,20 @@ $("#colorPickerMsgReceived").change(function() {
   stockage.setItem("colorMsgReceived", colorPickedForMsgReceived);
   updateTextChatReceivedColor();
 });
+
+
+function sendAvatar() {
+    if (stockage.getItem("avatarImgSrc")) {
+        var channel = new RTCMultiSession();
+        channel.send({
+          type: 'avatar',
+          username: stockage.getItem("username"),
+          avatar: stockage.getItem("avatarImgSrc")
+        });
+    }
+
+    return false;
+};
 
 /**
  * Function pour save les info des utilisateurs
@@ -193,14 +206,13 @@ function sendFile(data) {
 
 function sendMessage() {
     if ($('#messageTextBox').val()) {
-        var username = sessionStorage.getItem('username');
+        var username = stockage.getItem('username');
         var channel = new RTCMultiSession();
         writeToChatLog($('#messageTextBox').val(), "textChatSent");
         updateTextChatSentColor();
         channel.send({
           message: $('#messageTextBox').val(),
-          username: stockage.getItem("username"),
-          avatar: stockage.getItem("avatarImgSrc")
+          username: username
         });
         $('#messageTextBox').val("");
 
@@ -221,6 +233,8 @@ function setupDC1() {
             console.log('data channel connect');
             $('#waitForConnection').modal('hide');
             $('#waitForConnection').remove();
+           //on transmet l'avatar
+           sendAvatar();
         }
         dc1.onmessage = function (e) {
             console.log("Got message (pc1)", e.data);
@@ -238,9 +252,12 @@ function setupDC1() {
                 var data = JSON.parse(e.data);
                 if (data.type === 'file') {
                     fileReceiver1.receive(e.data, {});
+                }else if (data.type === 'avatar') {
+                  //FIXME
+                  addAvatarToGallery(data.username, data.avatar);
                 }
                 else {
-                    writeToChatLog(data.message, "textChatReceived", data.username, data.avatar);
+                    writeToChatLog(data.message, "textChatReceived", data.username);
                     updateTextChatReceivedColor();
                     // Scroll chat text area to the bottom on new input.
                     $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
@@ -323,6 +340,8 @@ pc2.ondatachannel = function (e) {
         console.log('data channel connect');
         $('#waitForConnection').modal('hide');
         $('#waitForConnection').remove();
+        //on transmet l'avatar
+        sendAvatar();
     }
     dc2.onmessage = function (e) {
         console.log("Got message (pc2)", e.data);
@@ -333,9 +352,12 @@ pc2.ondatachannel = function (e) {
             var data = JSON.parse(e.data);
             if (data.type === 'file') {
                 fileReceiver2.receive(e.data, {});
+            }else if (data.type === 'avatar') {
+              //FIXME
+              addAvatarToGallery(data.username, data.avatar);
             }
             else {
-                writeToChatLog(data.message, "textChatReceived", data.username, data.avatar);
+                writeToChatLog(data.message, "textChatReceived", data.username);
                 updateTextChatReceivedColor();
                 // Scroll chat text area to the bottom on new input.
                 $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
@@ -399,14 +421,17 @@ function replaceSmileyByImg(texteOriginal){
   return texteAvecImg;
 }
 
-function writeToChatLog(message, message_type, username, avatar) {
+function addAvatarToGallery(username, avatar){
+  console.log("try to add "+ username +"to gallery");
+  if($('#avatarGallery').is(':empty') && avatar != null && avatar != "undefined") {
+    $('#avatarGallery').append('<p>'+ username +' <img title=\"'+ username +'\" alt=\"avatar of '+ username +'\" src=\"' + avatar +'\" >'+ '</p>');
+  }
+}
+
+function writeToChatLog(message, message_type, username) {
     var fromUsername = "";
     if(username != null){
       fromUsername = "|"+ username +"| ";
-
-      if($('#avatarGallery').is(':empty') && avatar != null && avatar != "undefined") {
-        $('#avatarGallery').append('<p>'+ username +' <img title=\"'+ username +'\" alt=\"avatar of '+ username +'\" src=\"' + avatar +'\" >'+ '</p>');
-      }
     }
 
     message = replaceSmileyByImg(message);
