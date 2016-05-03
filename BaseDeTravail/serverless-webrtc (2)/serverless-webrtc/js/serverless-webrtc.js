@@ -435,7 +435,7 @@ function replaceSmileyByImg(texteOriginal){
 function addAvatarToGallery(username, avatar){
   stockage.setItem("avatar_"+username,  avatar);
 
-  console.log("try to add "+ username +"to gallery");
+  console.log("try to add '"+ username +"' to gallery");
   if($('#avatarGallery').is(':empty') && avatar != null && avatar != "undefined") {
     $('#avatarGallery').append('<p>'+ username +' <img title=\"'+ username +'\" alt=\"avatar of '+ username +'\" src=\"' + avatar +'\" >'+ '</p>');
   }
