@@ -22,8 +22,15 @@ textarea { resize:none; }
   text-align: center;
 }
 #avatarGallery p img,
-#avatarImgLoaded {
+#avatarImgLoaded
+{
   display: block;
   width: 48px;
   height: 48px;
+}
+
+.fromAvatar {
+  display: inline;
+  width: 32px;
+  height: 32px;
 }

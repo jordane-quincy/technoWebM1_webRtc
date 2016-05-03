@@ -266,7 +266,6 @@ function setupDC1() {
                 if (data.type === 'file') {
                     fileReceiver1.receive(e.data, {});
                 }else if (data.type === 'avatar') {
-                  //FIXME
                   addAvatarToGallery(data.username, data.avatar);
                 }
                 else {
@@ -366,7 +365,6 @@ pc2.ondatachannel = function (e) {
             if (data.type === 'file') {
                 fileReceiver2.receive(e.data, {});
             }else if (data.type === 'avatar') {
-              //FIXME
               addAvatarToGallery(data.username, data.avatar);
             }
             else {
@@ -435,6 +433,8 @@ function replaceSmileyByImg(texteOriginal){
 }
 
 function addAvatarToGallery(username, avatar){
+  stockage.setItem("avatar_"+username,  avatar);
+
   console.log("try to add "+ username +"to gallery");
   if($('#avatarGallery').is(':empty') && avatar != null && avatar != "undefined") {
     $('#avatarGallery').append('<p>'+ username +' <img title=\"'+ username +'\" alt=\"avatar of '+ username +'\" src=\"' + avatar +'\" >'+ '</p>');
@@ -443,11 +443,17 @@ function addAvatarToGallery(username, avatar){
 
 function writeToChatLog(message, message_type, username) {
     var fromUsername = "";
+    var fromAvatar = "";
     if(username != null){
       fromUsername = "|"+ username +"| ";
+
+      var avatarSaved = stockage.getItem("avatar_"+username);
+      if(avatarSaved != null){
+        fromAvatar = '<img class=\"fromAvatar\" title=\"'+ username +'\" alt=\"avatar of '+ username +'\" src=\"' + avatarSaved +'\" >';
+      }
     }
 
     message = replaceSmileyByImg(message);
 
-    document.getElementById('chatlog').innerHTML += '<p class=\"' + message_type + '\">' + "[" + getTimestamp() + "] " + fromUsername + message + '</p>';
+    document.getElementById('chatlog').innerHTML += '<p class=\"' + message_type + '\">'+ fromAvatar + "[" + getTimestamp() + "] " + fromUsername + message + '</p>';
 }
