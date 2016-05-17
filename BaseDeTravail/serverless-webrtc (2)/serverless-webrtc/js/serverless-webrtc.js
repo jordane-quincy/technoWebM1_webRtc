@@ -373,28 +373,28 @@ function createLocalOffer() {
     }, function () {console.warn("Couldn't create offer");});
 }*/
 function createLocalOffer () {
-  console.log('video1')
+  console.log('video1');
   navigator.getUserMedia = navigator.getUserMedia ||
                            navigator.webkitGetUserMedia ||
                            navigator.mozGetUserMedia ||
-                           navigator.msGetUserMedia
+                           navigator.msGetUserMedia;
   navigator.getUserMedia({video: true, audio: true}, function (stream) {
-    var video = document.getElementById('videoWebcam')
-    video.src = window.URL.createObjectURL(stream)
-    video.play()
-    pc1.addStream(stream)
-    console.log(stream)
-    console.log('adding stream to pc1')
-    setupDC1()
+    var video = document.getElementById('videoWebcam');
+    video.src = window.URL.createObjectURL(stream);
+    video.play();
+    pc1.addStream(stream);
+    console.log(stream);
+    console.log('adding stream to pc1');
+    setupDC1();
     pc1.createOffer(function (desc) {
-      pc1.setLocalDescription(desc, function () {}, function () {})
-      console.log('created local offer', desc)
+      pc1.setLocalDescription(desc, function () {}, function () {});
+      console.log('created local offer', desc);
     },
-    function () { console.warn("Couldn't create offer") },
-    sdpConstraints)
+    function () { console.warn("Couldn't create offer"); },
+    sdpConstraints);
   }, function (error) {
-    console.log('Error adding stream to pc1: ' + error)
-  })
+    console.log('Error adding stream to pc1: ' + error);
+});
 }
 
 pc1.onicecandidate = function (e) {
