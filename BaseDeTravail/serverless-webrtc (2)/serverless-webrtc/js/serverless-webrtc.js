@@ -43,11 +43,12 @@ function updateTextChatReceivedColor(){
   $('#colorPickerMsgReceived').val(colorMsgReceived);
 }
 
+//ajout des images de smiley dans le bandeau
 $("#smileyList").append(getSmileyDom(':)', './img/emoticons/27px-Face-smile.svg.png', true));
 $("#smileyList").append(getSmileyDom(':(', './img/emoticons/27px-Face-sad.svg.png', true));
 $("#smileyList").append(getSmileyDom(';)', './img/emoticons/27px-Face-wink.svg.png', true));
 $("#smileyList").append(getSmileyDom(':D', './img/emoticons/27px-Face-grin.svg.png', true));
-
+//retourne le html pour un smiley
 function getSmileyDom(text,  imgLink, hasOnClickFunction){
   var onClickFunction = '';
   if(hasOnClickFunction) {
@@ -103,9 +104,9 @@ $('#joinBtn').click(function () {
     console.log('Error adding stream to pc2: ' + error);
     permissionRefused = true;
   });
-  //AVEC ou SANS flux, pas de différence
+  //AVEC ou SANS flux, pas de différence ici
   $('#getRemoteOffer').modal('show');
-})
+});
 
 $('#offerGoBackBtn').click(function() {
     $('#showLocalOffer').modal('hide');
@@ -186,7 +187,7 @@ $("#colorPickerMsgReceived").change(function() {
   stockage.setItem("colorMsgReceived", colorPickedForMsgReceived);
   updateTextChatReceivedColor();
 });
-
+//envoi de notre avatar a l'autre personne
 function sendAvatar() {
     var cleStockageImg = "avatar_"+ stockage.getItem("username");
     if (stockage.getItem(cleStockageImg)) {
@@ -223,7 +224,7 @@ function saveInfoUser() {
         $('#createOrJoin').modal('show');
     }
 }
-
+// l'ensemble des avatars est stocke sous une forme particuliere
 function getCleStockageAvatarImg(username){
   return "avatar_"+username;
 }
