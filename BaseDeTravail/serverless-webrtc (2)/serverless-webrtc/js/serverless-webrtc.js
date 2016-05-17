@@ -190,14 +190,12 @@ $("#colorPickerMsgReceived").change(function() {
 //envoi de notre avatar a l'autre personne
 function sendAvatar() {
     var cleStockageImg = "avatar_"+ stockage.getItem("username");
-    if (stockage.getItem(cleStockageImg)) {
-        var channel = new RTCMultiSession();
-        channel.send({
-          type: 'avatar',
-          username: stockage.getItem("username"),
-          avatar: stockage.getItem(cleStockageImg)
-        });
-    }
+    var channel = new RTCMultiSession();
+    channel.send({
+      type: 'avatar',
+      username: stockage.getItem("username"),
+      avatar: stockage.getItem(cleStockageImg)
+    });
 
     return false;
 };
@@ -529,6 +527,9 @@ function replaceSmileyByImg(texteOriginal){
 }
 
 function addAvatarToGallery(username, avatar){
+  if (!avatar) {
+      //TODO convertir image par défaut en base 64
+  }
   stockage.setItem(getCleStockageAvatarImg(username),  avatar);
 
   console.log("try to add '"+ username +"' to gallery");
