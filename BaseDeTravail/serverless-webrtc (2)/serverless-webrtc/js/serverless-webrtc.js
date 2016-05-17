@@ -127,7 +127,7 @@ $('#answerSentBtn').click(function() {
     $('#waitForConnection').modal('show');
 });
 
-$('#offerRecd GoBackBtn').click(function() {
+$('#offerRecdGoBackBtn').click(function() {
     $('#getRemoteOffer').modal('hide');
     $('#createOrJoin').modal('show');
 });
