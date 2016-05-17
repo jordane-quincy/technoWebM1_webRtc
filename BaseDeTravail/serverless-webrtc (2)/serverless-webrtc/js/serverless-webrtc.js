@@ -8,6 +8,8 @@
 //FIXME: utiliser le localstorage à la fin du dév
 var stockage = sessionStorage;
 
+var permissionRefused;
+
 //des le chargement de la page
 var usernameAlreadySaved = stockage.getItem("username");
 if(usernameAlreadySaved != null){
@@ -95,8 +97,10 @@ $('#joinBtn').click(function () {
     video.src = window.URL.createObjectURL(stream);
     video.play();
     pc2.addStream(stream);
+    permissionRefused = false;
   }, function (error) {
     console.log('Error adding stream to pc2: ' + error);
+    permissionRefused = true;
   });
   //AVEC ou SANS flux, pas de différence
   $('#getRemoteOffer').modal('show');
@@ -272,6 +276,8 @@ function setupDC1() {
             $('#waitForConnection').remove();
            //on transmet l'avatar
            sendAvatar();
+           //on transmet la permission
+           sendPermissionRefused();
         }
         dc1.onmessage = function (e) {
             console.log("Got message (pc1)", e.data);
@@ -326,14 +332,25 @@ function createLocalOffer () {
     console.log(stream);
     console.log('adding stream to pc1');
     //creation offre AVEC flux
+    permissionRefused = false;
     setupAndcreateOffer();
   }, function (error) {
     console.log('Error adding stream to pc1: ' + error);
     //creation offre SANS flux
+    permissionRefused = true;
     setupAndcreateOffer();
 });
 
 }
+
+function sendPermissionRefused() {
+    console.log("sendPermissionRefused");
+    var channel = new RTCMultiSession();
+    channel.send({
+      type: 'permissionRefused',
+      value: permissionRefused
+    });
+};
 
 pc1.onicecandidate = function (e) {
     console.log("ICE candidate (pc1)", e);
@@ -411,6 +428,8 @@ pc2.ondatachannel = function (e) {
         $('#waitForConnection').remove();
         //on transmet l'avatar
         sendAvatar();
+        //on transmet la permission
+        sendPermissionRefused();
     }
     dc2.onmessage = function (e) {
         console.log("Got message (pc2)", e.data);
@@ -423,6 +442,10 @@ pc2.ondatachannel = function (e) {
                 fileReceiver2.receive(e.data, {});
             }else if (data.type === 'avatar') {
               addAvatarToGallery(data.username, data.avatar);
+            }else if (data.type === 'permissionRefused') {
+              if(data.value){
+                hideAllWebcam();
+              }
             }
             else {
                 writeToChatLog(data.message, "textChatReceived", data.username);
@@ -433,6 +456,11 @@ pc2.ondatachannel = function (e) {
         }
     };
 };
+
+function hideAllWebcam(){
+  console.log("hideAllWebcam");
+  $("#videoContainer").hide();
+}
 
 function handleOfferFromPC1(offerDesc) {
     pc2.setRemoteDescription(offerDesc);
