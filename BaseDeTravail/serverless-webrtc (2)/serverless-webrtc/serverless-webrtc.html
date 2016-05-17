@@ -75,7 +75,7 @@
   <div class="modal-body">
     The person who created the room will send you an "offer" string -- paste it here.
   <br/>
-  <textarea class="input-large" id="remoteOffer" name="remoteOffer" rows="10" cols="100" ></textarea>
+  <textarea class="input-large" id="remoteOffer" name="remoteOffer" rows="10" cols="100" autocomplete="off"></textarea>
   </div>
   <div class="modal-footer">
     <button class="btn btn-primary" id="offerRecdGoBackBtn" data-dismiss="modal" aria-hidden="true">Back to mode selection.</button>
@@ -90,7 +90,7 @@
   <div class="modal-body">
     Now paste in the "answer" that was sent back to you.
   <br/>
-  <textarea class="input-large" id="remoteAnswer" name="remoteAnswer" rows="10" cols="100" ></textarea>
+  <textarea class="input-large" id="remoteAnswer" name="remoteAnswer" rows="10" cols="100" autocomplete="off"></textarea>
   </div>
   <div class="modal-footer">
     <button class="btn btn-primary" id="answerRecdBtn" data-dismiss="modal" aria-hidden="true">Okay, I pasted it.</button>
@@ -116,7 +116,7 @@
     <div class="modal-body">
         <div id="errorInputUserInfo"></div>
         <label for="username">Username : </label><input type="text" name="username" class="inputInfoUsername" id="username" tabindex="1"/>
-        <label for="avatar">Avatar : </label><input type="file" name="avatar" id="avatar" tabindex="2" accept='image/*'><img src="" id="avatarImgLoaded" alt=""/>
+        <label for="avatar">Avatar : </label><input type="file" name="avatar" id="avatar" tabindex="2" accept='image/*' autocomplete="off"><img src="" id="avatarImgLoaded" alt=""/>
     </div>
     <div class="modal-footer">
         <button class="btn" id="saveInfoUserButton" tabindex="2" onClick="return saveInfoUser();">Save</button>
