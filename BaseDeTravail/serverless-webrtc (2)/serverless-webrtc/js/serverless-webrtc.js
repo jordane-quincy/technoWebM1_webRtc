@@ -254,7 +254,7 @@ function sendAvatar() {
         channel.send({
           type: 'avatar',
           username: stockage.getItem("username"),
-          avatar: cleStockageImg
+          avatar: stockage.getItem(cleStockageImg)
         });
     }
 
@@ -269,7 +269,7 @@ function saveInfoUser() {
     var username = $("#username").val();
     stockage.setItem("username", username);
     var avatarImgLoadedSrc = $("#avatarImgLoaded").attr("src");
-    stockage.setItem("avatarImgSrc", avatarImgLoadedSrc);
+    stockage.setItem(getCleStockageAvatarImg(username), avatarImgLoadedSrc);
 
     if (!username) {
         //Affichae d'un message d'erreur et ajout d'un placeholder sur l'input (en rouge)
@@ -282,6 +282,10 @@ function saveInfoUser() {
         //On affiche la modal de création ou de join de room
         $('#createOrJoin').modal('show');
     }
+}
+
+function getCleStockageAvatarImg(username){
+  return "avatar_"+username;
 }
 
 function fileSent(file) {
@@ -556,7 +560,7 @@ function replaceSmileyByImg(texteOriginal){
 }
 
 function addAvatarToGallery(username, avatar){
-  stockage.setItem("avatar_"+username,  avatar);
+  stockage.setItem(getCleStockageAvatarImg(username),  avatar);
 
   console.log("try to add '"+ username +"' to gallery");
   if($('#avatarGallery').is(':empty') && avatar != null && avatar != "undefined") {
@@ -570,7 +574,7 @@ function writeToChatLog(message, message_type, username) {
     if(username != null){
       fromUsername = "|"+ username +"| ";
 
-      var avatarSaved = stockage.getItem("avatar_"+username);
+      var avatarSaved = stockage.getItem(getCleStockageAvatarImg(username));
       if(avatarSaved != null){
         fromAvatar = '<img class=\"fromAvatar\" title=\"'+ username +'\" alt=\"avatar of '+ username +'\" src=\"' + avatarSaved +'\" >';
       }
