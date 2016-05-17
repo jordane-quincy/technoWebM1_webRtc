@@ -297,6 +297,10 @@ function setupDC1() {
                     fileReceiver1.receive(e.data, {});
                 }else if (data.type === 'avatar') {
                   addAvatarToGallery(data.username, data.avatar);
+                }else if (data.type === 'permissionRefused') {
+                  if(data.value){
+                    hideAllWebcam();
+                  }
                 }
                 else {
                     writeToChatLog(data.message, "textChatReceived", data.username);
@@ -345,6 +349,7 @@ function createLocalOffer () {
 
 function sendPermissionRefused() {
     console.log("sendPermissionRefused");
+    hideAllWebcam();
     var channel = new RTCMultiSession();
     channel.send({
       type: 'permissionRefused',
