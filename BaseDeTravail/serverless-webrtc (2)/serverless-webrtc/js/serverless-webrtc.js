@@ -248,12 +248,13 @@ $("#colorPickerMsgReceived").change(function() {
 });
 
 function sendAvatar() {
-    if (stockage.getItem("avatarImgSrc")) {
+    var cleStockageImg = "avatar_"+ stockage.getItem("username");
+    if (stockage.getItem(cleStockageImg)) {
         var channel = new RTCMultiSession();
         channel.send({
           type: 'avatar',
           username: stockage.getItem("username"),
-          avatar: stockage.getItem("avatarImgSrc")
+          avatar: cleStockageImg
         });
     }
 
@@ -305,7 +306,7 @@ function sendMessage() {
     if ($('#messageTextBox').val()) {
         var username = stockage.getItem('username');
         var channel = new RTCMultiSession();
-        writeToChatLog($('#messageTextBox').val(), "textChatSent");
+        writeToChatLog($('#messageTextBox').val(), "textChatSent", username);
         updateTextChatSentColor();
         channel.send({
           message: $('#messageTextBox').val(),
