@@ -498,7 +498,7 @@ function addAvatarToGallery(username, avatar){
 
   console.log("try to add '"+ username +"' to gallery");
   if($('#avatarGallery').is(':empty') && avatar != null && avatar != "undefined") {
-    $('#avatarGallery').append('<p>'+ username +' <img title=\"'+ username +'\" alt=\"avatar of '+ username +'\" src=\"' + avatar +'\" >'+ '</p>');
+    $('#avatarGallery').append('<p>'+ username +' <img title=\"'+ username +'\" alt=\"\" src=\"' + avatar +'\" >'+ '</p>');
   }
 }
 
@@ -510,7 +510,7 @@ function writeToChatLog(message, message_type, username) {
 
       var avatarSaved = stockage.getItem(getCleStockageAvatarImg(username));
       if(avatarSaved != null){
-        fromAvatar = '<img class=\"fromAvatar\" title=\"'+ username +'\" alt=\"avatar of '+ username +'\" src=\"' + avatarSaved +'\" >';
+        fromAvatar = '<img class=\"fromAvatar\" title=\"'+ username +'\" alt=\"\" src=\"' + avatarSaved +'\" >';
       }
     }
 

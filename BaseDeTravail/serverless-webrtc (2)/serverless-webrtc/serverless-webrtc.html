@@ -34,8 +34,8 @@
 </div>
 <div id="avatarGallery"></div>
 <div id="videoContainer">
-    <video autoplay id="videoWebcam"></video>
     <video autoplay id="remoteVideo"></video>
+    <video autoplay id="videoWebcam"></video>
 </div>
 
 <div class="modal" id="showLocalOffer" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalSendOffer" hidden>
@@ -116,7 +116,7 @@
     <div class="modal-body">
         <div id="errorInputUserInfo"></div>
         <label for="username">Username : </label><input type="text" name="username" class="inputInfoUsername" id="username" tabindex="1"/>
-        <label for="avatar">Avatar : </label><input type="file" name="avatar" id="avatar" tabindex="2" accept='image/*'><img src="image/nothing.png" id="avatarImgLoaded" alt=""/>
+        <label for="avatar">Avatar : </label><input type="file" name="avatar" id="avatar" tabindex="2" accept='image/*'><img src="" id="avatarImgLoaded" alt=""/>
     </div>
     <div class="modal-footer">
         <button class="btn" id="saveInfoUserButton" tabindex="2" onClick="return saveInfoUser();">Save</button>
