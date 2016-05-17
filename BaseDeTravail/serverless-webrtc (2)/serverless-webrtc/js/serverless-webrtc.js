@@ -7,7 +7,7 @@
 
 //FIXME: utiliser le localstorage à la fin du dév
 var stockage = sessionStorage;
-
+// est-ce que l'utilisateur a refuse le partage ?
 var permissionRefused;
 
 //des le chargement de la page
@@ -20,7 +20,7 @@ if(usernameAlreadySaved != null){
     $('#saveInfoUserButton').focus();
   }
 }
-
+//si pas de couleur enregistree, on met celles par defaut :
 if(stockage.getItem("colorMsgSent") == null){
   stockage.setItem("colorMsgSent", '#468847');
 }
@@ -31,6 +31,7 @@ if(stockage.getItem("colorMsgReceived") == null){
 }
 updateTextChatReceivedColor();
 
+//maj couleur du texte
 function updateTextChatSentColor(){
   var colorMsgSent = stockage.getItem("colorMsgSent");
   $('.textChatSent').css('color', colorMsgSent);
