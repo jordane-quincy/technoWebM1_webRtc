@@ -11,7 +11,6 @@
     <link href="css/serverless-webrtc-bootstrap.css" rel="stylesheet"/>
 </head>
 <body>
-<a href="https://github.com/cjb/serverless-webrtc/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"/></a>
 <div class="span12">
   <fieldset class="well">
     <p class="head muted">
@@ -27,7 +26,7 @@
     <input id="colorPickerMsgReceived" type='color'/>
     <div id="smileyList"></div>
   </div>
-  <form class="form-inline" onSubmit="return sendMessage()" action="">
+  <form class="form-inline" onSubmit="return sendMessage()">
     <input type="text" id="messageTextBox" placeholder="Type your message here">
     <button type="submit" id="sendMessageBtn" class="btn">Send message</button>
   </form>
@@ -35,13 +34,13 @@
 </div>
 <div id="avatarGallery"></div>
 <div id="videoContainer">
-    <video autoplay="true" id="videoWebcam"></video>
-    <video autoplay="true" id="remoteVideo"></video>
+    <video autoplay id="videoWebcam"></video>
+    <video autoplay id="remoteVideo"></video>
 </div>
 
-<div class="modal" id="showLocalOffer" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" hidden>
+<div class="modal" id="showLocalOffer" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalSendOffer" hidden>
   <div class="modal-header">
-    <h3 id="myModalLabel">Send your local offer to someone else</h3>
+    <h3 id="modalSendOffer">Send your local offer to someone else</h3>
   </div>
   <div class="modal-body">
     Here's your "offer" -- it tells someone else how to connect to you.  Send the whole thing to them, for example in an instant message or e-mail.
@@ -54,9 +53,9 @@
   </div>
 </div>
 
-<div class="modal" id="showLocalAnswer" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" hidden>
+<div class="modal" id="showLocalAnswer" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalSendAnswer" hidden>
   <div class="modal-header">
-    <h3 id="myModalLabel">Send your local answer to someone else</h3>
+    <h3 id="modalSendAnswer">Send your local answer to someone else</h3>
   </div>
   <div class="modal-body">
     Here's your "answer" -- it tells someone else how to connect to you.  Send the whole thing to them, for example in an instant message or e-mail.
@@ -69,14 +68,14 @@
   </div>
 </div>
 
-<div class="modal" id="getRemoteOffer" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" hidden>
+<div class="modal" id="getRemoteOffer" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalPastOffer" hidden>
   <div class="modal-header">
-    <h3 id="myModalLabel">Paste the "offer" you received</h3>
+    <h3 id="modalPastOffer">Paste the "offer" you received</h3>
   </div>
   <div class="modal-body">
     The person who created the room will send you an "offer" string -- paste it here.
   <br/>
-  <textarea class="input-large" id="remoteOffer" name="remoteOffer" rows="10" cols="100" autocomplete="off"></textarea>
+  <textarea class="input-large" id="remoteOffer" name="remoteOffer" rows="10" cols="100" ></textarea>
   </div>
   <div class="modal-footer">
     <button class="btn btn-primary" id="offerRecdGoBackBtn" data-dismiss="modal" aria-hidden="true">Back to mode selection.</button>
@@ -84,40 +83,40 @@
   </div>
 </div>
 
-<div class="modal" id="getRemoteAnswer" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" hidden>
+<div class="modal" id="getRemoteAnswer" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalPasteAnswer" hidden>
   <div class="modal-header">
-    <h3 id="myModalLabel">Paste the "answer" you received</h3>
+    <h3 id="modalPasteAnswer">Paste the "answer" you received</h3>
   </div>
   <div class="modal-body">
     Now paste in the "answer" that was sent back to you.
   <br/>
-  <textarea class="input-large" id="remoteAnswer" name="remoteAnswer" rows="10" cols="100" autocomplete="off"></textarea>
+  <textarea class="input-large" id="remoteAnswer" name="remoteAnswer" rows="10" cols="100" ></textarea>
   </div>
   <div class="modal-footer">
     <button class="btn btn-primary" id="answerRecdBtn" data-dismiss="modal" aria-hidden="true">Okay, I pasted it.</button>
   </div>
 </div>
 
-<div class="modal" id="waitForConnection" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" hidden>
+<div class="modal" id="waitForConnection" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalWaitingConnection" hidden>
   <div class="modal-header">
-    <h3 id="myModalLabel">Waiting for connection</h3>
+    <h3 id="modalWaitingConnection">Waiting for connection</h3>
   </div>
   <div class="modal-body">
     This dialog will disappear when a connection is made.
   </div>
-  <div class="spinner" align="center">
-    <img src="img/spinner.gif"></img>
+  <div class="spinner">
+    <img src="img/spinner.gif" alt="image non chargée"/>
   </div>
 </div>
 
 <div  class="modal" id="modalLogin" >
     <div class="modal-header">
-      <h3 id="myModalLabel">Donnez vos informations</h3>
+      <h3 id="modalInformation">Donnez vos informations</h3>
     </div>
     <div class="modal-body">
         <div id="errorInputUserInfo"></div>
         <label for="username">Username : </label><input type="text" name="username" class="inputInfoUsername" id="username" tabindex="1"/>
-        <label for="avatar">Avatar : </label><input type="file" name="avatar" id="avatar" tabindex="2" accept='image/*' autocomplete="off"><img id="avatarImgLoaded"/>
+        <label for="avatar">Avatar : </label><input type="file" name="avatar" id="avatar" tabindex="2" accept='image/*'><img src="image/nothing.png" id="avatarImgLoaded" alt=""/>
     </div>
     <div class="modal-footer">
         <button class="btn" id="saveInfoUserButton" tabindex="2" onClick="return saveInfoUser();">Save</button>
