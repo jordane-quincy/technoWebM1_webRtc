@@ -68,7 +68,7 @@ var activedc;
 var pc1icedone = false;
 var sdpConstraints = {
   optional: [],
-  mandatory: []{
+  mandatory: {
     OfferToReceiveAudio: true,
     OfferToReceiveVideo: true
   }
