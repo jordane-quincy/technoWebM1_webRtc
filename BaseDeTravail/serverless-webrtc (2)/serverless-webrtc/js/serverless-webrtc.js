@@ -98,6 +98,7 @@ $('#joinBtn').click(function () {
   }, function (error) {
     console.log('Error adding stream to pc2: ' + error);
   });
+  //AVEC ou SANS flux, pas de différence
   $('#getRemoteOffer').modal('show');
 })
 
@@ -302,6 +303,14 @@ function setupDC1() {
     } catch (e) { console.warn("No data channel (pc1)", e); }
 }
 
+function setupAndcreateOffer(){
+  setupDC1();
+  pc1.createOffer(function (desc) {
+    pc1.setLocalDescription(desc, function () {}, function () {});
+    console.log('created local offer', desc);
+  },function () { console.warn("Couldn't create offer"); },
+  sdpConstraints);
+}
 function createLocalOffer () {
   console.log('video1');
   navigator.getUserMedia = navigator.getUserMedia ||
@@ -316,15 +325,13 @@ function createLocalOffer () {
     pc1.addStream(stream);
     console.log(stream);
     console.log('adding stream to pc1');
+    //creation offre AVEC flux
+    setupAndcreateOffer();
   }, function (error) {
     console.log('Error adding stream to pc1: ' + error);
+    //creation offre SANS flux
+    setupAndcreateOffer();
 });
-  setupDC1();
-  pc1.createOffer(function (desc) {
-    pc1.setLocalDescription(desc, function () {}, function () {});
-    console.log('created local offer', desc);
-  },function () { console.warn("Couldn't create offer"); },
-  sdpConstraints);
 
 }
 
