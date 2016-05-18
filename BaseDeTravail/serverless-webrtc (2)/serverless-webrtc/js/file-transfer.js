@@ -149,6 +149,7 @@ var FileSaver = {
         save.href = fileUrl;
         save.target = '_blank';
         save.download = fileName || fileUrl;
+        save.text = save.download;
 
         var evt = new MouseEvent('click', {
             view: window,
@@ -156,7 +157,12 @@ var FileSaver = {
             cancelable: true
         });
 
-        save.dispatchEvent(evt);
+        //save.dispatchEvent(evt);
+        console.log('FileSaver 1');
+        var pContainer = $("<p class=\"text-success\">[" + getTimestamp() + "] Received file '"+ save.download +"'. Click on link to download.</p>");
+        $('#chatlog').append(pContainer);
+        document.getElementById('chatlog').appendChild(save);
+        console.log('FileSaver 2');
 
         (window.URL || window.webkitURL).revokeObjectURL(save.href);
     }
