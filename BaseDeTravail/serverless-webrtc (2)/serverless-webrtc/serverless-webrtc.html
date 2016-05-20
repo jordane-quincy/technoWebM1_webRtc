@@ -22,8 +22,8 @@
   <div>
     <img id="biggerText" src="img/font-add-icon.png" alt="click to get bigger text"/><!-- Image credit : http://www.fatcow.com/free-icons -->
     <img id="smallerText" src="img/font-delete-icon.png" alt="click to get smaller text"/><!-- Image credit : http://www.fatcow.com/free-icons -->
-    <input id="colorPickerMsgSent" type='color'/>
-    <input id="colorPickerMsgReceived" type='color'/>
+    <label for="colorPickerMsgSent">Couleur de votre texte : </label><input id="colorPickerMsgSent" type='color'/><br/>
+    <label for="colorPickerMsgReceived">Couleur du texte de l'autre personne : </label><input id="colorPickerMsgReceived" type='color'/>
     <div id="smileyList"></div>
   </div>
   <form class="form-inline" onSubmit="return sendMessage()">

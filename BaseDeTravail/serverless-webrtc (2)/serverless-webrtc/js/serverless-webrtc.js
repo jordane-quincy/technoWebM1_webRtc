@@ -208,6 +208,10 @@ function saveInfoUser() {
     var username = $("#username").val();
     stockage.setItem("username", username);
     var avatarImgLoadedSrc = $("#avatarImgLoaded").attr("src");
+    //Si pas d'avatar, on met un avatar par défaut
+    if (!avatarImgLoadedSrc) {
+        avatarImgLoadedSrc = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAmCAYAAACoPemuAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuOWwzfk4AAAImSURBVFhHxdgxS5tRGMXxBLVIrVOpCEI/QRylinSyFIQ6tJO7c0EdnFzcSgdLJ/0KguCnsEuHdtEuHSu6FCra0g41/g9JSPKY3Pe598Y3B34kb3Lvcw8JxpBKvV6vZKSG9/iMS9w0b3Wtx/V8WhKLTeMAKqIB/eh5rdP6uCQUm8MFbImQc2ifP5HF9Nb8gj3YQ/v8b21EsXF8gz0whvZrTnEiim3BHpRCc4rjLDaKM9hDUvzACMJxFluEPSCH5oXjLLYJOzyH5oXjLLYLOzyH5oXjLPYRdngOzQvHWWwbdngOzQvHWWwFdngOzQvHWWwSv2EPSHGNRwjHWUzZhz0kheYUJ6LYDPSVxh4UQ/s1pzgRxZRVFH3V6Uf7tN+XyGLKW/yHPThE67XPn4RiyjL0P88W6EXrtD4uicWUCWzgK+zbq+svWIfWxSejWGceYwEvm7e6zktGsQd4gR0c4hP0Kh03r/X4ErQuPgnFnuIDfqL11oVondZrnz8RxR7iHf7CHu6hfdqvOcVxFptF7vf9Fs3RvHAcxfSnfgV7QA7NC3+EFBR7hX+wgwdBczW/dwLF5vEHduAgaf4z3E2fYlPwfrLn0jlP0J0+xY5gB9wnndedHsXewG4sw2u0Y4rpU/o77KYy6NwxNGKKrcFuKJPOb6SjWBWnsIvLdAL14Kpd7DnswmFQD+61i+3BLhoG9eBeo5hevkH9mpNLPaqtYvqlzy4YokrtFnc8aQAxJLP+AAAAAElFTkSuQmCC";
+    }
     stockage.setItem(getCleStockageAvatarImg(username), avatarImgLoadedSrc);
 
     if (!username) {
